@@ -86,6 +86,60 @@
   transform: translateX(4px);
 }
 
+.import-section {
+  margin-top: var(--spacing-2xl);
+  display: flex;
+  justify-content: center;
+}
+
+.import-card {
+  background: var(--gradient-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--transition-speed) ease;
+  display: block;
+  max-width: 600px;
+  width: 100%;
+  backdrop-filter: blur(var(--backdrop-blur));
+  box-shadow: var(--shadow-glow);
+}
+
+.import-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow), 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+.import-card-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-highlight);
+  margin-bottom: var(--spacing-md);
+}
+
+.import-card-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-highlight);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.9;
+}
+
+.import-card-action {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text-highlight);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.import-card:hover .import-card-action {
+  transform: translateX(4px);
+}
+
 @media (max-width: 768px) {
   .surveys-grid {
     grid-template-columns: 1fr;

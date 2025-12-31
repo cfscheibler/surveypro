@@ -30,6 +30,18 @@ export function HomePage() {
             </Link>
           ))}
         </div>
+
+        <div className="import-section">
+          <Link to="/import" className="import-card">
+            <h2 className="import-card-title">➕ Import New Survey</h2>
+            <p className="import-card-description">
+              Upload a text file or paste survey text to automatically convert it to the proper format
+            </p>
+            <div className="import-card-action">
+              Import Survey →
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );

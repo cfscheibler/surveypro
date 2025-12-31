@@ -16,7 +16,13 @@ Create `.env` file:
 DATABASE_URL=postgresql://user:password@localhost:5432/g2m_surveys
 PORT=3001
 FRONTEND_URL=http://localhost:5173
+GOOGLE_GEMINI_API_KEY=your-gemini-api-key-here
 ```
+
+**Note**: For survey import feature, you need a Google Gemini API key:
+1. Get free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Add it to `.env` as `GOOGLE_GEMINI_API_KEY`
+3. See `GEMINI_SETUP.md` for detailed instructions
 
 ### 3. Initialize Database
 The database tables will be created automatically on first run.

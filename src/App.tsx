@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { HomePage, SurveyPage, ThankYouPage } from './pages';
+import { HomePage, SurveyPage, ThankYouPage, SurveyImporter } from './pages';
 import './App.css';
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/survey/:surveyId" element={<SurveyPage />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
+        <Route path="/import" element={<SurveyImporter />} />
       </Routes>
     </div>
   );

@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { initializeDatabase } from './db/connection.js';
 import responsesRouter from './routes/responses.js';
+import surveysRouter from './routes/surveys.js';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/responses', responsesRouter);
+app.use('/api/surveys', surveysRouter);
 
 // Initialize database and start server
 async function startServer() {
