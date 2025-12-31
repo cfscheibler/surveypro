@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getSurveyById } from '../data/surveys';
 import { getSurveyResponses, getResponseDetails } from '../services/api';
 import { convertResponsesToCSV, downloadCSV } from '../services/csvExport';
@@ -23,7 +23,6 @@ interface Response {
 
 export function SurveyResults() {
   const { surveyId } = useParams<{ surveyId: string }>();
-  const navigate = useNavigate();
   const [responses, setResponses] = useState<Response[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

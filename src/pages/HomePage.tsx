@@ -15,26 +15,19 @@ export function HomePage() {
 
         <div className="surveys-grid">
           {surveys.map((survey) => (
-            <div key={survey.id} className="survey-card-wrapper">
-              <Link
-                to={`/survey/${survey.id}`}
-                className="survey-card"
-              >
-                <h2 className="survey-card-title">{survey.title}</h2>
-                {survey.description && (
-                  <p className="survey-card-description">{survey.description}</p>
-                )}
-                <div className="survey-card-action">
-                  Start Survey →
-                </div>
-              </Link>
-              <Link
-                to={`/survey/${survey.id}/results`}
-                className="survey-results-link"
-              >
-                View Results
-              </Link>
-            </div>
+            <Link
+              key={survey.id}
+              to={`/survey/${survey.id}`}
+              className="survey-card"
+            >
+              <h2 className="survey-card-title">{survey.title}</h2>
+              {survey.description && (
+                <p className="survey-card-description">{survey.description}</p>
+              )}
+              <div className="survey-card-action">
+                Start Survey →
+              </div>
+            </Link>
           ))}
         </div>
 
