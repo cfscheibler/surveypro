@@ -11,8 +11,34 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
+// CORS configuration - allow Vercel preview and production URLs
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || '*', // In production, set this to your Vercel URL
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    const frontendUrl = process.env.FRONTEND_URL;
+    
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
+      return callback(null, true);
+    }
+    
+    // If FRONTEND_URL is not set, allow all origins (development)
+    if (!frontendUrl) {
+      return callback(null, true);
+    }
+    
+    // Allow the exact FRONTEND_URL
+    if (origin === frontendUrl) {
+      return callback(null, true);
+    }
+    
+    // Allow any vercel.app subdomain (handles preview deployments)
+    if (origin.includes('vercel.app') && frontendUrl.includes('vercel.app')) {
+      return callback(null, true);
+    }
+    
+    // Reject other origins
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
