@@ -7,35 +7,49 @@ Create a competitive SaaS platform that disrupts SurveyPro by offering superior 
 
 ## Phase 1: Authentication & User Management
 
-### 1.1 Authentication System
+### 1.1 Company Account Creation
+- **Company Registration**
+  - Company account creation workflow
+  - Company information collection:
+    - Company name
+    - Company website URL
+    - Industry
+    - Company size
+    - Contact information
+  - Company HTML/CSS upload or paste
+  - Company logo upload
+  - Brand colors extraction from HTML
+  - Automatic UI theming based on company branding
+  - Survey portal customization to match company look and feel
+  - Account activation workflow
+
+### 1.2 Authentication System
 - **User Registration**
   - Email/password authentication
   - Account verification flow
   - Password reset functionality
   - Two-factor authentication (2FA) support
+  - Company association during registration
 
 - **Admin Account Creation**
-  - Registration form with required fields:
-    - Name (first, last)
-    - Email (verified)
-    - Phone number
-    - Company name
-    - Company HTML/CSS upload or paste
-    - Company logo upload
-    - Brand colors extraction from HTML
-  - Account activation workflow
+  - Admin registration within company account
+  - Role assignment (Super Admin, Admin, Viewer)
+  - Admin invitation system
+  - Admin approval workflow
 
 - **Login System**
   - Secure session management
+  - Company context in session
   - Remember me functionality
   - Session timeout handling
   - Logout functionality
 
-### 1.2 User Profile Management
+### 1.3 User Profile Management
 - Profile settings page
 - Company branding management
 - Account settings
 - Billing information (for future subscription tiers)
+- Company information management
 
 ---
 
@@ -88,15 +102,31 @@ Create a competitive SaaS platform that disrupts SurveyPro by offering superior 
 
 ---
 
-## Phase 3: Panel Management
+## Phase 3: Panel Management & User Accounts
 
-### 3.1 Panel Participant Management
+### 3.1 User Account System
+- **Survey Taker Accounts**
+  - User account creation
+  - Email-based authentication
+  - Profile management
+  - Survey history tracking
+  - Response history
+
+- **User Management**
+  - User database
+  - User search and filtering
+  - User activity tracking
+  - User segmentation
+  - Custom user fields
+
+### 3.2 Panel Participant Management
 - **Import Participants**
   - CSV/Excel import
   - Manual entry form
   - Bulk upload with validation
   - Duplicate detection
   - Data validation (email format, phone format)
+  - Link to user accounts
 
 - **Participant Database**
   - Search and filter
@@ -105,12 +135,14 @@ Create a competitive SaaS platform that disrupts SurveyPro by offering superior 
   - Participant profiles
   - Activity history
   - Opt-out management
+  - User account linking
 
-### 3.2 Panel Segmentation
+### 3.3 Panel Segmentation
 - Create participant groups
 - Filter by demographics
 - Custom segments
 - Segment-based targeting
+- User-based targeting
 
 ---
 
@@ -318,32 +350,42 @@ Create a competitive SaaS platform that disrupts SurveyPro by offering superior 
 ## Implementation Priority
 
 ### MVP (Minimum Viable Product)
-1. User authentication
-2. Basic dashboard (surveys list)
-3. Survey creation/editing
-4. Company branding application
-5. Basic email distribution
-6. Response viewing
+1. Company account creation
+2. Admin authentication
+3. Basic admin dashboard (surveys list)
+4. Survey creation/editing
+5. Company branding application (auto-theming)
+6. Basic email distribution to users
+7. Response viewing for admins
 
 ### Phase 1 (3-6 months)
-- Complete authentication system
-- Full dashboard
-- Survey builder with branding
-- Panel management basics
-- Email distribution
+- Complete company account system
+- Admin account management
+- Admin permissions system
+- Full admin dashboard
+- Survey builder with company branding
+- Survey modification/deletion by admins
+- User account system
+- Email distribution to survey takers
+- Response viewing and analytics for admins
 
 ### Phase 2 (6-12 months)
-- SMS distribution
-- Advanced analytics
+- Advanced admin features
+- SMS distribution to users
+- Advanced analytics for admins
 - Panel segmentation
 - Export/reporting features
+- User management dashboard
+- Survey assignment to users
 
 ### Phase 3 (12-18 months)
 - SOC II compliance
 - Advanced security features
-- App notifications
+- App notifications to users
 - API for integrations
 - White-label options
+- Multi-company support
+- Advanced admin controls
 
 ---
 

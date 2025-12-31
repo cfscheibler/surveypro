@@ -47,25 +47,58 @@ This document outlines the technical architecture for the G2M Survey Platform, d
 
 ### Core Tables
 
-#### `users`
+#### `companies`
 ```sql
 - id (UUID, PK)
+- name (string, unique, indexed)
+- website_url (string)
+- industry (string)
+- company_size (string)
+- company_html (text)
+- company_css (text)
+- company_logo_url (string)
+- brand_colors (JSON)
+- settings (JSON)
+- created_at (timestamp)
+- updated_at (timestamp)
+- is_active (boolean)
+```
+
+#### `users` (Admins)
+```sql
+- id (UUID, PK)
+- company_id (UUID, FK -> companies.id)
 - email (string, unique, indexed)
 - password_hash (string)
 - first_name (string)
 - last_name (string)
 - phone_number (string)
-- company_name (string)
-- company_html (text)
-- company_css (text)
-- company_logo_url (string)
-- brand_colors (JSON)
+- role (enum: super_admin, admin, viewer)
 - email_verified (boolean)
 - phone_verified (boolean)
 - created_at (timestamp)
 - updated_at (timestamp)
 - last_login_at (timestamp)
 - is_active (boolean)
+- invited_by (UUID, FK -> users.id, nullable)
+```
+
+#### `survey_takers` (User Accounts)
+```sql
+- id (UUID, PK)
+- company_id (UUID, FK -> companies.id)
+- email (string, indexed)
+- first_name (string)
+- last_name (string)
+- phone_number (string, nullable)
+- custom_fields (JSON)
+- email_verified (boolean)
+- phone_verified (boolean)
+- opt_out_email (boolean)
+- opt_out_sms (boolean)
+- created_at (timestamp)
+- updated_at (timestamp)
+- last_survey_at (timestamp, nullable)
 ```
 
 #### `surveys`
@@ -110,6 +143,7 @@ This document outlines the technical architecture for the G2M Survey Platform, d
 ```sql
 - id (UUID, PK)
 - survey_id (UUID, FK -> surveys.id)
+- survey_taker_id (UUID, FK -> survey_takers.id, nullable)
 - participant_id (UUID, FK -> participants.id, nullable)
 - started_at (timestamp)
 - completed_at (timestamp, nullable)
@@ -130,7 +164,8 @@ This document outlines the technical architecture for the G2M Survey Platform, d
 #### `participants`
 ```sql
 - id (UUID, PK)
-- user_id (UUID, FK -> users.id)
+- company_id (UUID, FK -> companies.id)
+- survey_taker_id (UUID, FK -> survey_takers.id, nullable)
 - email (string, indexed)
 - phone_number (string, indexed)
 - first_name (string)
@@ -244,6 +279,17 @@ POST   /api/distributions
 GET    /api/distributions/:id
 POST   /api/distributions/:id/send
 GET    /api/distributions/:id/status
+POST   /api/distributions/email/send
+POST   /api/distributions/sms/send
+```
+
+### Branding
+```
+GET    /api/branding
+PUT    /api/branding
+POST   /api/branding/logo
+POST   /api/branding/extract-colors
+GET    /api/branding/preview
 ```
 
 ### Branding
