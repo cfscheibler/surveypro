@@ -18,7 +18,7 @@ export async function convertSurveyTextToJSON(
   surveyId?: string
 ): Promise<Survey> {
   const genAI = getGeminiClient();
-  const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-3-pro-preview' });
 
   const prompt = `You are a survey conversion expert. Convert the following survey text into a valid JSON format matching this TypeScript interface:
 
