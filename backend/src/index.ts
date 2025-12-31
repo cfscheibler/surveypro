@@ -48,8 +48,8 @@ app.use(cors(corsOptions));
 
 // Log CORS configuration for debugging
 console.log('🔒 CORS Configuration:');
-console.log('  FRONTEND_URL:', process.env.FRONTEND_URL || 'Not set (using *)');
-console.log('  Allowing origins:', corsOptions.origin);
+console.log('  FRONTEND_URL:', process.env.FRONTEND_URL || 'Not set (allowing all)');
+console.log('  Allowing: FRONTEND_URL and any *.vercel.app subdomain');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
