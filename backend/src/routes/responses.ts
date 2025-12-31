@@ -209,6 +209,8 @@ router.get('/response/:responseId', async (req: Request, res: Response) => {
 });
 
 // Export responses as CSV (for a survey)
+// Note: This endpoint returns question IDs, not question text
+// The frontend will map question IDs to question text using the survey definition
 router.get('/export/:surveyId', async (req: Request, res: Response) => {
   try {
     const { surveyId } = req.params;
@@ -230,20 +232,61 @@ router.get('/export/:surveyId', async (req: Request, res: Response) => {
         [surveyId]
       );
 
-      // Convert to CSV format
-      const csvRows: string[] = [];
+      // Group by response to create proper CSV structure
+      const responsesMap = new Map<string, Array<{ questionId: string; answer: string }>>();
       
-      // Header
-      csvRows.push('Response ID,Completed At,Question ID,Answer');
-
-      // Data rows
       result.rows.forEach((row) => {
         const responseId = row.response_id;
-        const completedAt = row.completed_at || '';
-        const questionId = row.question_id;
-        const answer = row.answer_value.replace(/"/g, '""'); // Escape quotes
+        if (!responsesMap.has(responseId)) {
+          responsesMap.set(responseId, []);
+        }
+        responsesMap.get(responseId)!.push({
+          questionId: row.question_id,
+          answer: row.answer_value,
+        });
+      });
+
+      // Get all unique question IDs to create header
+      const allQuestionIds = new Set<string>();
+      result.rows.forEach((row) => {
+        allQuestionIds.add(row.question_id);
+      });
+      const questionIds = Array.from(allQuestionIds).sort();
+
+      // Build CSV
+      const csvRows: string[] = [];
+      
+      // Header: Response ID, Completed At, then all question IDs
+      const header = ['Response ID', 'Completed At', ...questionIds];
+      csvRows.push(header.map(h => `"${h}"`).join(','));
+
+      // Data rows: one row per response
+      responsesMap.forEach((answers, responseId) => {
+        const responseRow = result.rows.find(r => r.response_id === responseId);
+        const completedAt = responseRow?.completed_at || '';
         
-        csvRows.push(`"${responseId}","${completedAt}","${questionId}","${answer}"`);
+        const row: string[] = [
+          responseId,
+          completedAt,
+          ...questionIds.map(qId => {
+            const answer = answers.find(a => a.questionId === qId);
+            if (!answer) return '';
+            // Format answer: parse JSON arrays, escape quotes
+            let formattedAnswer = answer.answer;
+            try {
+              const parsed = JSON.parse(answer.answer);
+              if (Array.isArray(parsed)) {
+                formattedAnswer = parsed.join('; ');
+              } else {
+                formattedAnswer = String(parsed);
+              }
+            } catch {
+              formattedAnswer = String(answer.answer);
+            }
+            return formattedAnswer.replace(/"/g, '""'); // Escape quotes for CSV
+          })
+        ];
+        csvRows.push(row.map(cell => `"${cell}"`).join(','));
       });
 
       const csv = csvRows.join('\n');
@@ -264,4 +307,3 @@ router.get('/export/:surveyId', async (req: Request, res: Response) => {
 });
 
 export default router;
-

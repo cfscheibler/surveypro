@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getSurveyById } from '../data/surveys';
 import { getSurveyResponses, getResponseDetails } from '../services/api';
+import { convertResponsesToCSV, downloadCSV } from '../services/csvExport';
+import { Button } from '../components';
 import './SurveyResults.css';
 
 interface Answer {
@@ -21,10 +23,12 @@ interface Response {
 
 export function SurveyResults() {
   const { surveyId } = useParams<{ surveyId: string }>();
+  const navigate = useNavigate();
   const [responses, setResponses] = useState<Response[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedResponse, setExpandedResponse] = useState<string | null>(null);
+  const [downloading, setDownloading] = useState(false);
 
   const survey = surveyId ? getSurveyById(surveyId) : undefined;
 
@@ -93,6 +97,32 @@ export function SurveyResults() {
     }
   };
 
+  const handleDownloadCSV = () => {
+    if (!survey || responses.length === 0) return;
+
+    try {
+      setDownloading(true);
+      
+      // Convert responses to CSV format with question text
+      const csvContent = convertResponsesToCSV(
+        survey,
+        responses.map((r) => ({
+          id: r.id,
+          completed_at: r.completed_at || r.created_at,
+          answers: r.answers,
+        }))
+      );
+
+      const filename = `${surveyId}-results-${new Date().toISOString().split('T')[0]}.csv`;
+      downloadCSV(csvContent, filename);
+    } catch (err) {
+      console.error('Error downloading CSV:', err);
+      setError('Failed to download CSV. Please try again.');
+    } finally {
+      setDownloading(false);
+    }
+  };
+
   if (!survey) {
     return (
       <div className="survey-results">
@@ -133,7 +163,16 @@ export function SurveyResults() {
           <p className="results-count">
             {responses.length} {responses.length === 1 ? 'response' : 'responses'}
           </p>
-          <Link to="/" className="back-link">← Back to Home</Link>
+          <div className="results-actions">
+            <Button
+              onClick={handleDownloadCSV}
+              disabled={downloading || responses.length === 0}
+              variant="primary"
+            >
+              {downloading ? 'Downloading...' : '📥 Download CSV'}
+            </Button>
+            <Link to="/" className="back-link">← Back to Home</Link>
+          </div>
         </div>
 
         {responses.length === 0 ? (
