@@ -83,10 +83,11 @@ router.post('/submit', async (req: Request, res: Response) => {
   }
 });
 
-// Get all responses for a survey
+// Get all responses for a survey with answers
 router.get('/survey/:surveyId', async (req: Request, res: Response) => {
   try {
     const { surveyId } = req.params;
+    const includeAnswers = req.query.includeAnswers === 'true';
 
     const client = await pool.connect();
 
@@ -108,6 +109,36 @@ router.get('/survey/:surveyId', async (req: Request, res: Response) => {
          ORDER BY sr.created_at DESC`,
         [surveyId]
       );
+
+      // If includeAnswers is true, fetch answers for each response
+      if (includeAnswers) {
+        const responsesWithAnswers = await Promise.all(
+          responsesResult.rows.map(async (response) => {
+            const answersResult = await client.query(
+              `SELECT question_id, answer_value, created_at
+               FROM survey_response_answers
+               WHERE response_id = $1
+               ORDER BY created_at`,
+              [response.id]
+            );
+
+            return {
+              ...response,
+              answers: answersResult.rows.map((row) => ({
+                questionId: row.question_id,
+                answer: row.answer_value,
+                createdAt: row.created_at,
+              })),
+            };
+          })
+        );
+
+        return res.json({
+          success: true,
+          count: responsesWithAnswers.length,
+          responses: responsesWithAnswers,
+        });
+      }
 
       res.json({
         success: true,
