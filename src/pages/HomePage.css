@@ -110,7 +110,7 @@
 
 .import-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-glow), 0 10px 30px rgba(99, 102, 241, 0.3);
+  box-shadow: var(--shadow-glow), 0 10px 30px rgba(0, 102, 204, 0.3);
 }
 
 .import-card-title {

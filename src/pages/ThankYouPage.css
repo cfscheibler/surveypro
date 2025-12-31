@@ -1,9 +1,10 @@
 .thank-you-page {
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--spacing-xl);
+  background: var(--gradient-bg);
 }
 
 .thank-you-content {
