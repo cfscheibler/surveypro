@@ -1,10 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import { HomePage, SurveyPage, ThankYouPage, SurveyImporter } from './pages';
+import { PanayaHeader } from './components';
 import './App.css';
 
 function App() {
   return (
     <div className="app">
+      <PanayaHeader />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/survey/:surveyId" element={<SurveyPage />} />

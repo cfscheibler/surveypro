@@ -1,0 +1,47 @@
+.panaya-header {
+  background: var(--panaya-header-bg, var(--color-surface));
+  border-bottom: 1px solid var(--panaya-border, var(--color-border));
+  padding: var(--spacing-md) 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(var(--backdrop-blur));
+}
+
+.panaya-header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panaya-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.panaya-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.panaya-logo-text {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--panaya-primary, var(--color-primary));
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+  .panaya-header-container {
+    padding: 0 var(--spacing-md);
+  }
+
+  .panaya-logo {
+    height: 32px;
+  }
+}
+

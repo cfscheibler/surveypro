@@ -1,21 +1,54 @@
 import type { Survey } from '../../types/survey';
 
-// TODO: Replace with actual SDR survey data
 export const sdrSurvey: Survey = {
     id: 'panaya-sdr-survey',
-    title: 'Panaya SDR Team Survey',
-    description: 'Survey for the Panaya SDR team. Please provide your feedback.',
+    title: 'Panaya SDR Enablement Questionnaire',
+    description: 'Help us understand how we can best support you in your SDR role at Panaya.',
     sections: [
         {
-            id: 'welcome',
-            title: 'Welcome',
-            description: 'Thank you for participating in this survey.',
+            id: 'context',
+            title: 'Role Context',
+            description: 'Tell us a bit about your current setup.',
             questions: [
                 {
-                    id: 'placeholder',
+                    id: 'role_tenure',
+                    type: 'multiple-choice',
+                    text: 'How long have you been in your current SDR role?',
+                    options: ['Less than 6 months', '6-12 months', '1-2 years', '2+ years'],
+                    required: true
+                },
+                {
+                    id: 'primary_market',
+                    type: 'multiple-choice',
+                    text: 'What is your primary target market?',
+                    options: ['SMB', 'Mid-Market', 'Enterprise', 'Strategic'],
+                    required: true
+                }
+            ]
+        },
+        {
+            id: 'pain_points',
+            title: 'Pain Points',
+            description: 'What are the biggest challenges you face?',
+            questions: [
+                {
+                    id: 'biggest_challenge',
+                    type: 'multiple-choice',
+                    text: 'What is the single biggest blocker to hitting your quota?',
+                    options: [
+                        'Not enough leads',
+                        'Bad data quality',
+                        'Lack of response / connecting',
+                        'Internal processes / admin work',
+                        'Product knowledge gap'
+                    ],
+                    required: true
+                },
+                {
+                    id: 'tool_frustration',
                     type: 'short-answer',
-                    text: 'This is a placeholder. The actual survey questions will be added here.',
-                    placeholder: 'Enter your response...',
+                    text: 'If you could wave a magic wand and fix one thing about your tech stack, what would it be?',
+                    placeholder: 'e.g., Salesforce is too slow...',
                     required: false
                 }
             ]
