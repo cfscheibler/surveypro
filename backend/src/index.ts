@@ -11,10 +11,19 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors({
+const corsOptions = {
   origin: process.env.FRONTEND_URL || '*', // In production, set this to your Vercel URL
   credentials: true,
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+
+// Log CORS configuration for debugging
+console.log('🔒 CORS Configuration:');
+console.log('  FRONTEND_URL:', process.env.FRONTEND_URL || 'Not set (using *)');
+console.log('  Allowing origins:', corsOptions.origin);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
