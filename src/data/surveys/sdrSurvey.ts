@@ -272,7 +272,7 @@ export const sdrSurvey: Survey = {
                 {
                     id: 'metric-leadership-should-see',
                     type: 'paragraph',
-                    text: 'Is there any metric you think leadership should see — but doesn't today?',
+                    text: 'Is there any metric you think leadership should see — but doesn\'t today?',
                     placeholder: 'Describe the metric...',
                     required: false
                 }
