@@ -1,4 +1,4 @@
-import { Survey } from '../types/survey';
+import type { Survey } from '../types/survey';
 
 export const placeholderSurvey: Survey = {
     id: 'sdr-enablement-v1',

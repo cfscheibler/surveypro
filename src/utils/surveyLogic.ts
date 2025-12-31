@@ -1,4 +1,4 @@
-import type { Survey, Question, Section, LogicRule } from '../types/survey';
+import type { Survey, Question, Section } from '../types/survey';
 import type { SurveyAnswers } from '../hooks/useSurveyForm';
 
 /**
@@ -124,8 +124,7 @@ export function getFilteredSections(
  */
 export function shouldTriggerNavigation(
   question: Question,
-  answer: string | string[] | null | undefined,
-  answers: SurveyAnswers
+  answer: string | string[] | null | undefined
 ): { goToQuestionId?: string; skipToSectionId?: string } | null {
   if (!question.logic || answer === null || answer === undefined) {
     return null;
